@@ -1,0 +1,1 @@
+[(21 封私信 / 80 条消息) 怎么求arcsinx这一类反函数的泰勒展开式? - 知乎 (zhihu.com)](https://www.zhihu.com/question/415331294)
