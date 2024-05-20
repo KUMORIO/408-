@@ -79,3 +79,65 @@
 }
 ```
 
+ssh  kumorio@192.168.112.128
+
+## vscode 调试xv6
+
+>[从零开始使用Vscode调试XV6 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/501901665)
+
+### vscode xv6 launch文件
+
+>```json
+>// xv6-riscv/.vscode/launch.json
+>{
+>    "version": "0.2.0",
+>    "configurations": [
+>        {
+>            "name": "xv6debug",
+>            "type": "cppdbg",
+>            "request": "launch",
+>            "program": "${workspaceFolder}/kernel/kernel",
+>            "stopAtEntry": true,
+>            "cwd": "${workspaceFolder}",
+>            "miDebuggerServerAddress": "127.0.0.1:26000", //见.gdbinit 中 target remote xxxx:xx
+>            "miDebuggerPath": "/usr/bin/gdb-multiarch", // which gdb-multiarch
+>            "MIMode": "gdb",
+>            "preLaunchTask": "xv6build"
+>        }
+>    ]
+>}
+>```
+
+### vscode xv6 task文件
+
+>```json
+>// xv6-riscv/.vscode/tasks.json
+>{
+>    "version": "2.0.0",
+>    "tasks": [
+>        {
+>            "label": "xv6build",
+>            "type": "shell",
+>            "isBackground": true,
+>            "command": "make qemu-gdb",
+>            "problemMatcher": [
+>                {
+>                    "pattern": [
+>                        {
+>                            "regexp": ".",
+>                            "file": 1,
+>                            "location": 2,
+>                            "message": 3
+>                        }
+>                    ],
+>                    "background": {
+>                        "beginsPattern": ".*Now run 'gdb' in another window.",
+>                        // 要对应编译成功后,一句echo的内容. 此处对应 Makefile Line:170
+>                        "endsPattern": "."
+>                    }
+>                }
+>            ]
+>        }
+>    ]
+>}
+>```
