@@ -9,10 +9,7 @@
 ```py
 mkdir django_intro
 django-admin startproject test1
-
 ```
-
-
 
 ### Pycharm
 
@@ -211,5 +208,81 @@ class UserInfo(models.Model):
 ```cmd
 python manage.py makemigrations
 python manage.py migrate
+```
+
+### 添加用户
+
+templates下
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>ADD USERS</h1>
+
+<a href="/info/add/">添加</a>
+<form method="post" action="/info/add/">
+    {% csrf_token %}
+    <input type="text" name="user" placeholder="user name">
+    <input type="text" name="pwd" placeholder="pwd">
+    <input type="text" name="age" placeholder="age">
+    <input type="submit" value="submit" >
+</form>
+</body>
+</html>
+```
+
+views.py下
+
+```py
+def info_add(request):
+    if request.method == "GET":
+        return render(request,"info_add.html")
+    user = request.POST.get("user")
+    pwd = request.POST.get("pwd")
+    age = request.POST.get("age")
+
+    UserInfo.objects.create(name=user,password=pwd,age=age)
+
+    return redirect("http://127.0.0.1:8000/info/list")
+```
+
+### 删除用户
+
+views.py下
+
+```python
+def info_delete(request):
+   nid = request.GET.get('nid')
+   UserInfo.objects.filter(id=nid).delete()
+   return HttpResponse("DELETE SUCCESS")
+```
+
+html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>ADD USERS</h1>
+
+
+<form method="post" action="/info/add/">
+    {% csrf_token %}
+    <input type="text" name="user" placeholder="user name">
+    <input type="text" name="pwd" placeholder="pwd">
+    <input type="text" name="age" placeholder="age">
+    <input type="submit" value="submit" >
+</form>
+</body>
+</html>
 ```
 
