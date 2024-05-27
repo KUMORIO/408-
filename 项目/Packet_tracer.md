@@ -1,0 +1,1 @@
+conda create -n Django_env python=3.11 

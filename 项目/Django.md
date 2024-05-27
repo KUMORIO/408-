@@ -176,7 +176,7 @@ select @@basedir;
  reate database django;
 ```
 
-#### settings.py
+#### settings.py数据库配置
 
 ```py
 DATABASES = {
@@ -184,7 +184,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
     'USER':'root',
-    'PASSWORD':'223663,',
+    'PASSWORD':'223663',
     'HOST':'127.0.0.1',
     'PORT':'3306',
     }
@@ -213,6 +213,8 @@ python manage.py migrate
 ### 添加用户
 
 templates下
+
+一定要添加`  {% csrf_token %}`,提交的时候
 
 ```html
 <!DOCTYPE html>
@@ -286,3 +288,84 @@ html
 </html>
 ```
 
+## 员工项目
+
+### 创建项目
+
+工具里 直接使用stratapp app01
+
+### 设计models.py
+
+#### 添加外键
+
+to哪个表关联，to_fields哪个列关联
+
+```py
+    depart = models.ForeignKey(to="Department",to_fields="id",on_delete=models.CASCADE())
+    depart = models.ForeignKey(to="Department",to_fields="id",null=True,blank=True,on_delete=models.SET_NULL)
+
+```
+
+名字自动生成_id,要添加级联删除，允许为空
+
+#### 添加固定表
+
+```python
+#固定变量
+gender_choices=(
+    (1,"男"),
+    (2,"女"),
+)
+gender = models.SmallIntegerField(verbose_name="性别",choices=gender_choices)
+```
+
+### 创建数据库
+
+```py
+create database staff DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+```
+
+#### 配置数据库
+
+```py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'staff',
+    'USER':'root',
+    'PASSWORD':'223663',
+    'HOST':'127.0.0.1',
+    'PORT':'3306',
+    }
+}
+```
+
+更改mysql加密方式
+
+```py
+alter user 'root'@'localhost' identified with mysql_native_password by '223663';
+```
+
+python终端
+
+```py
+ makemigrations
+```
+
+全局搜索函数 check_database_version_supported()删除
+
+
+
+
+
+
+
+
+
+<p><code>&lt;header&gt;</code> 作为内联元素被包围。</p>
+<p>如果需要把代码显示为一个独立的块元素，请使用 &lt;pre&gt; 标签：</p>
+<pre>
+    &lt;article&gt;
+        &lt;h1&gt;Article Heading&lt;/h1&gt;
+    &lt;/article&gt;
+</pre>
