@@ -33,7 +33,7 @@ python manage.py startapp [app的名字]
 #### 命令行启动
 
 ```py
-python manage.py runserver
+pytho n manage.py runserver
 ```
 
 ## Diango框架
@@ -340,19 +340,19 @@ DATABASES = {
 }
 ```
 
-更改mysql加密方式
+#### 更改mysql加密方式
 
 ```py
 alter user 'root'@'localhost' identified with mysql_native_password by '223663';
 ```
 
-python终端
+#### python终端
 
 ```py
  makemigrations
 ```
 
-全局搜索函数 check_database_version_supported()删除
+#### 全局搜索函数 check_database_version_supported()删除
 
 
 

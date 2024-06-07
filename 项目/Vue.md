@@ -177,3 +177,250 @@ export default
 </script>
 ```
 
+## VUE小案例-黑马记事本
+
+>目录结构
+>
+>--xxx.html
+>
+>--css--index.css
+>
+>--js--example.js
+>
+>文件地址："E:\Vue\heima_note"
+
+index.css来渲染页面的组件，xxx.html是基本框架
+
+```html
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>小黑记事本</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="googlebot" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" href="./css/index.css" />
+</head>
+
+<body>
+  <!-- 主体区域 -->
+  <section id="todoapp">
+    <!-- 输入框 -->
+    <header class="header">
+      <h1>sss</h1>
+      <input v-model="inputValue" @keyup.enter="add" autofocus="autofocus" autocomplete="off" placeholder="请输入任务"
+        class="new-todo" />
+    </header>
+    <!-- 列表区域 -->
+    <section class="main">
+      <ul class="todo-list">
+        <li class="todo" v-for="(item,index) in list">
+          <div class="view">
+            <span class="index">{{ index+1 }}.</span>
+            <label>{{ item }}</label>
+            <button class="destroy" @click="remove(index)"></button>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <!-- 统计和清空 -->
+    <footer class="footer" v-show="list.length!=0">
+      <span class="todo-count" v-if="list.length!=0">
+        <strong>{{ list.length }}</strong> items left
+      </span>
+      <button v-show="list.length!=0" class="clear-completed" @click="clear">
+       Clear
+      </button>
+    </footer>
+  </section>
+  <!-- 底部 -->
+  <footer class="info">
+    <p>
+      <a href="http://www.itheima.com/"><img src="./img/black.png" alt="" /></a>
+    </p>
+  </footer>
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var app = new Vue({
+      el: "#todoapp",
+      data: {
+        list: ["写代码", "吃饭饭", "睡觉觉"],
+        inputValue: "好好学习,天天向上"
+      },
+      methods: {
+        add: function () {
+          this.list.push(this.inputValue);
+        },
+        remove: function (index) {
+          console.log("删除");
+          console.log(index+1);
+          this.list.splice(index, 1);
+        },
+        clear: function () {
+          this.list = [];
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>
+```
+
+### 解释代码
+
+```html
+list.value.splice(index, 1)
+```
+
+按index序号0，1，2等等，从数组lsit删去一个值，1表示index开始删去几个元素
+
+```html
+<style scoped>
+```
+
+就是把css文件，迁移到vue了
+
+```html
+<template>
+<script>
+```
+
+- `<template>` 标签用于定义组件的模板，包含了组件的 HTML 结构和布局。它定义了组件渲染到 DOM 上的具体样式和内容。
+  - **HTML 语法**：可以使用标准的 HTML 语法。
+  - **数据绑定**：可以通过 Vue 的模板语法（如 `{{ message }}`）进行数据绑定。
+  - **指令**：可以使用 Vue 的指令（如 `v-for`, `v-if`, `v-bind`, `v-on`）来实现数据的动态展示和行为控制。
+- `<script>` 标签用于定义组件的 JavaScript 逻辑，包括数据、方法、生命周期钩子、计算属性等。
+  - **组件选项**：通过 `export default` 导出一个对象，包含组件的各种选项，如 `data`, `methods`, `computed`, `props` 等。
+  - **逻辑封装**：可以在脚本中定义数据、方法和其他逻辑，来控制组件的行为。
+
+### 以下代码。展示如何在html中使用vue
+
+- 第一部分表示，在你的 HTML 文件中引入 Vue.js 库
+
+- 第二部分表示，在 `<script>` 标签中，定义一个新的 Vue 实例，并关联到特定的 DOM 元素上。
+- el: "#todoapp",的作用是，让id="todoapp"的区域才能使用，data，methods
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var app = new Vue({
+      el: "#todoapp",
+      data: {
+        list: ["写代码", "吃饭饭", "睡觉觉"],
+        inputValue: "好好学习,天天向上"
+      },
+      methods: {
+        add: function () {
+          this.list.push(this.inputValue);
+        },
+        remove: function (index) {
+          console.log("删除");
+          console.log(index+1);
+          this.list.splice(index, 1);
+        },
+        clear: function () {
+          this.list = [];
+        }
+      },
+    })
+  </script>
+```
+
+
+
+### 什么是DOM
+
+DOM（Document Object Model）元素是网页中所有可见和不可见部分的节点表示。它是浏览器将 HTML、XML 文档结构化为对象的模型。每个 DOM 元素代表文档中的一个部分，如一个标签、文本节点、属性等。
+
+#### 关键点
+
+1. **文档结构**：
+   - 在网页中，HTML 文件被解析为一个树形结构，称为 DOM 树。
+   - 每个 HTML 标签（如 `<div>`, `<p>`, `<a>`）在 DOM 中被表示为一个对象或节点。
+
+2. **节点类型**：
+   - **元素节点**：代表一个 HTML 元素。例如，`<div>`, `<p>`, `<a>`。
+   - **文本节点**：包含在元素中的文本内容。例如，`<p>Hello, World!</p>` 中的 "Hello, World!"。
+   - **属性节点**：包含在元素中的属性，如 `class`, `id`, `href`。
+
+3. **DOM 操作**：
+   - 你可以通过 JavaScript 访问和修改 DOM 元素。
+   - 例如，改变一个元素的内容、添加或删除元素、修改属性等。
+
+#### 示例
+
+考虑以下 HTML 代码：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM Example</title>
+</head>
+<body>
+  <div id="todoapp">
+    <h1>My To-Do List</h1>
+    <ul>
+      <li class="todo-item">Buy groceries</li>
+      <li class="todo-item">Clean the house</li>
+      <li class="todo-item">Finish homework</li>
+    </ul>
+  </div>
+</body>
+</html>
+```
+
+在这个例子中，以下是一些 DOM 元素的说明：
+
+- **元素节点**：
+  - `<div id="todoapp">`: 代表一个 `div` 元素，包含 `id` 属性。
+  - `<h1>My To-Do List</h1>`: 代表一个 `h1` 元素，包含文本内容 "My To-Do List"。
+  - `<ul>`: 代表一个无序列表元素。
+  - `<li class="todo-item">Buy groceries</li>`: 代表一个列表项元素，包含类 `todo-item` 和文本内容 "Buy groceries"。
+
+- **文本节点**：
+  - 在 `<h1>` 元素内的文本 "My To-Do List" 是一个文本节点。
+  - 在 `<li>` 元素内的 "Buy groceries", "Clean the house", 和 "Finish homework" 是文本节点。
+
+#### 操作 DOM
+
+你可以通过 JavaScript 操作这些 DOM 元素，例如：
+
+```javascript
+// 获取 DOM 元素
+var todoApp = document.getElementById('todoapp');
+var todos = document.getElementsByClassName('todo-item');
+
+// 修改文本内容
+todoApp.querySelector('h1').textContent = 'Updated To-Do List';
+todos[0].textContent = 'Go shopping';
+
+// 添加新元素
+var newItem = document.createElement('li');
+newItem.className = 'todo-item';
+newItem.textContent = 'Read a book';
+todoApp.querySelector('ul').appendChild(newItem);
+```
+
+在这个例子中：
+
+- **获取元素**：
+  - `document.getElementById('todoapp')` 获取 `id` 为 `todoapp` 的元素。
+  - `document.getElementsByClassName('todo-item')` 获取所有 `class` 为 `todo-item` 的元素。
+
+- **修改内容**：
+  - 修改 `h1` 元素的文本内容。
+  - 修改第一个 `li` 元素的文本内容。
+
+- **添加新元素**：
+  - 创建一个新的 `li` 元素，设置类名和文本内容，并将其添加到 `ul` 元素中。
+
+#### 总结
+
+DOM 元素是网页的组成部分，表示文档的结构。你可以通过 JavaScript 操作这些元素，动态地修改网页内容和结构。
