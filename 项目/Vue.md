@@ -424,3 +424,36 @@ todoApp.querySelector('ul').appendChild(newItem);
 #### 总结
 
 DOM 元素是网页的组成部分，表示文档的结构。你可以通过 JavaScript 操作这些元素，动态地修改网页内容和结构。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
