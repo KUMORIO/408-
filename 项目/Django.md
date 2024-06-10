@@ -362,10 +362,52 @@ alter user 'root'@'localhost' identified with mysql_native_password by '223663';
 
 
 
-<p><code>&lt;header&gt;</code> 作为内联元素被包围。</p>
+<p>
+    <code>&lt;header&gt;</code> 作为内联元素被包围。</p>
 <p>如果需要把代码显示为一个独立的块元素，请使用 &lt;pre&gt; 标签：</p>
 <pre>
     &lt;article&gt;
         &lt;h1&gt;Article Heading&lt;/h1&gt;
     &lt;/article&gt;
 </pre>
+
+
+
+> html文件启动
+>
+> 右键
+
+### display
+
+#### display: block;
+
+![](./../image/Django/1.png)
+
+#### display: inline;
+
+![2](./../image/Django/2.png)
+
+#### display: inline-block;
+
+![3](./../image/Django/3.png)
+
+#### display: flex;
+
+![4](./../image/Django/4.png)
+
+#### display: inline-flex;
+
+![5](./../image/Django/5.png)
+
+#### display: grid;
+
+![6](./../image/Django/6.png)
+
+#### display: inline-grid;
+
+![7](./../image/Django/7.png)
+
+#### display: flow-root;
+
+![8](./../image/Django/8.png)
+
