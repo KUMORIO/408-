@@ -377,6 +377,10 @@ alter user 'root'@'localhost' identified with mysql_native_password by '223663';
 >
 > 右键
 
+### a标签的hover
+
+鼠标放到文字就变化
+
 ### display
 
 #### display: block;
@@ -410,4 +414,518 @@ alter user 'root'@'localhost' identified with mysql_native_password by '223663';
 #### display: flow-root;
 
 ![8](./../image/Django/8.png)
+
+ https://i1.mifile.cn/f/i/2014/cn/placeholder-40.png
+
+### iconfont矢量图
+
+[javascript - iconfont的使用方法(更新了一些内容） - 个人文章 - SegmentFault 思否](https://segmentfault.com/a/1190000016235900#item-1)
+
+#### 使用方法
+
+三种方式：unicode，symbol，和icon-xxx，官方文档有步骤
+
+第三种方式，下载文件，放在html周围的文件夹，加一句话就可以在html用图标了
+
+```html
+<link rel="stylesheet"href="./font_5274h12vkj5/iconfont.css">
+
+```
+
+**iconfront.css**规定了图标的大小之类的信息，样式信息
+
+![](./../image/Django/icon_css.png)
+
+哪里需要用就用下面这个代码
+
+```html
+    <div class="test-icofont">
+        <i class="iconfont icon-shuju-wenjianliebiao">sss</i>
+    </div>
+```
+
+### 小米商城半代码
+
+```html
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+  <title>Title</title>
+
+  <link rel="stylesheet"href="./font_5274h12vkj5/iconfont.css">
+
+    <style>
+
+​    body {
+
+​      margin: 0;
+
+​    }
+
+​    img {
+
+​      width: 100%;
+
+​      height: 100%;
+
+​    }
+
+​    .left {
+
+​      float: left;
+
+​    }
+
+​    .container {
+
+​      width: 1226px;
+
+​      margin: 0 auto;
+
+​    }
+
+​    .header {
+
+​      background: #333;
+
+​    }
+
+​    .header .menu {
+
+​      float: left;
+
+​      color: white;
+
+​    }
+
+​    .header .account {
+
+​      float: right;
+
+​      color: white;
+
+​    }
+
+​    .header a {
+
+​      color: #b0b0b0;
+
+​      line-height: 40px;
+
+​      display: inline-block;
+
+​      font-size: 12px;
+
+​      margin-right: 10px;
+
+​      text-decoration: none;
+
+​    }
+
+​    .header a:hover {
+
+​      color: white;
+
+​    }
+
+​    .sub-header {
+
+​      height: 100px;
+
+​    }
+
+​    .sub-header .ht {
+
+​      height: 100px;
+
+​    }
+
+​    .sub-header .logo {
+
+​      width: 234px;
+
+​      float: left;
+
+​    }
+
+​    .sub-header .logo a {
+
+​      margin-top: 22px;
+
+​      display: inline-block
+
+​    }
+
+​    .sub-header .logo a img {
+
+​      height: 56px;
+
+​      width: 56px;
+
+​    }
+
+​    .sub-header .menu-list {
+
+​      float: left;
+
+​      line-height: 100px;
+
+​    }
+
+​    .sub-header .menu-list a {
+
+​      display: inline-block;
+
+​      padding: 0 10px;
+
+​      color: #333;
+
+​      font-size: 16px;
+
+​      text-decoration: none;
+
+​    }
+
+​    .sub-header .menu-list a:hover {
+
+​      color: #ff6700;
+
+​    }
+
+​    .sub-header .search {
+
+​      float: right;
+
+​    }
+
+​    .slider .sd-img {
+
+​      width: 1226px;
+
+​      height: 460px;
+
+​    }
+
+​    .news{
+
+​      margin-top: 14px;
+
+​    }
+
+​    .news .channel {
+
+​      width: 228px;
+
+​      height: 164px;
+
+​      background-color: #5f5750;
+
+​      padding: 3px;
+
+​    }
+
+​    .news .channel .item {
+
+​      height: 82px;
+
+​      width: 76px;
+
+​      float: left;
+
+​      text-align: center;
+
+​    }
+
+​    .news .channel .item a{
+
+​      display: inline-block;
+
+​      font-size: 12px;
+
+​      padding-top: 18px;
+
+​      color: #fff;
+
+​      text-decoration: none;
+
+​      opacity: 0.7;
+
+​    }
+
+​    .news .channel .item a:hover{
+
+​      opacity: 1;
+
+​    }
+
+​    .news .channel .item  img{
+
+​      height: 24px;
+
+​      width: 24px;
+
+​      display: block;
+
+​      margin: 0 auto 4px;
+
+​    }
+
+​    .news .list-item {
+
+​      width: 316px;
+
+​      height: 170px;
+
+​    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <div class="container">
+
+        <div class="menu">
+
+​            <a href="https://www.mi.com/">小米商城</a>
+
+​            <a href="https://www.mi.com/">MIUI</a>
+
+​            <a href="https://www.mi.com/">云服务</a>
+
+​            <a href="https://www.mi.com/">有品</a>
+
+​            <a href="https://www.mi.com/">开放平台</a>
+
+​    </div>
+
+        <div class="account">
+
+​            <a href="https://www.mi.com/">登录</a>
+
+​            <a href="https://www.mi.com/">注册</a>
+
+​            <a href="https://www.mi.com/">消息通知</a>
+
+​    </div>
+
+        <div style="clear: both"></div>
+
+  </div>
+
+</div>
+
+<div class="sub-header">
+
+    <div class="container">
+
+        <div class="ht logo">
+
+​      <!-- a，行内标签；默认设置高度、边距无效。 -> 块级 & 行内+块级 -->
+
+​            <a href="https://www.mi.com/">
+
+​                <img src="images/logo-mi2.png" alt="">
+
+​      </a>
+
+​    </div>
+
+        <div class="ht menu-list">
+
+​            <a href="https://www.mi.com/">Xiaomi手机</a>
+
+​            <a href="https://www.mi.com/">Redmi红米</a>
+
+​            <a href="https://www.mi.com/">电视</a>
+
+​            <a href="https://www.mi.com/">笔记本</a>
+
+​            <a href="https://www.mi.com/">平板</a>
+
+​    </div>
+
+        <div class="ht search"></div>
+
+        <div class="clear:both;"></div>
+
+  </div>
+
+</div>
+
+<div class="slider">
+
+    <div class="container">
+
+        <div class="sd-img">
+
+​            <img src="images/v1.jpg" alt="">
+
+​    </div>
+
+  </div>
+
+</div>
+
+<div class="news">
+
+    <div class="container">
+
+        <div class="channel left">
+
+            <div class="item">
+
+​                <a href="https://www.mi.com/">
+
+​          <i class="iconfont icon-shuju-wenjianliebiao"></i>
+
+​          <span>保障服务</span>
+
+​        </a>
+
+​      </div>
+
+           <div class="item">
+
+​                <a href="https://www.mi.com/">
+
+​          <i class="iconfont icon-shuju-wenjianliebiao"></i>
+
+​          <span>保障服务</span>
+
+​        </a>
+
+​      </div>
+
+            <div class="item">
+
+​                <a href="https://www.mi.com/">
+
+​          <i class="iconfont icon-shuju-wenjianliebiao"></i>
+
+​          <span>保障服务</span>
+
+​        </a>
+
+​      </div>
+
+            <div class="item">
+
+​                <a href="https://www.mi.com/">
+
+​          <i class="iconfont icon-shuju-wenjianliebiao"></i>
+
+​          <span>保障服务</span>
+
+​        </a>
+
+​      </div>
+
+            <div class="item">
+
+​                <a href="https://www.mi.com/">
+
+​          <i class="iconfont icon-shuju-wenjianliebiao"></i>
+
+​          <span>保障服务</span>
+
+​        </a>
+
+​      </div>
+
+            <div class="item">
+
+​                <a href="https://www.mi.com/">
+
+​          <i class="iconfont icon-shuju-wenjianliebiao"></i>
+
+​          <span>保障服务</span>
+
+​        </a>
+
+​      </div>
+
+            <div class="clear:both"></div>
+
+​    </div>
+
+        <div class="list-item left" style="margin-left: 14px">
+
+​            <img src="images/w1.jpg"/>
+
+​    </div>
+
+        <div class="list-item left" style="margin-left: 15px">
+
+​            <img src="images/w1.jpg"/>
+
+​    </div>
+
+        <div class="list-item left" style="margin-left: 15px">
+
+​            <img src="images/w1.jpg"/>
+
+​    </div>
+
+        <div class="clear:both"></div>
+
+  </div>
+
+</div>
+
+</body>
+
+</html>
+
+
+```
+
+
+
+### 两个图的绝对位置和相对位置
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        .c1{
+            height: 300px;
+            width: 500px;
+            border: 1px solid red;
+            margin: 100px;
+
+           
+        }
+        .c1 .c2{
+            height: 59px;
+            width: 59px;
+            background-color: #00FF7F;
+
+            position: relative;
+            top: 40px; left: 40px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="c1">
+
+        <div class="c2"></div>
+
+    </div>
+</body>
+</html>
+```
 

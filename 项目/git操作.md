@@ -81,6 +81,10 @@
 
 ssh  kumorio@192.168.112.128
 
+git config --global user.email "kumorio@192.168.112.128"
+
+git config --global user.name "winkumorio"
+
 ## vscode 调试xv6
 
 >[从零开始使用Vscode调试XV6 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/501901665)
