@@ -177,6 +177,136 @@ export default
 </script>
 ```
 
+### script setup
+
+在 Vue 3.2 及以上版本中，`<script setup>` 提供了一种更简洁的方式来定义组件的逻辑。所有的响应式状态、计算属性、方法、生命周期钩子等都可以直接写在 `<script setup>` 块中。下面是一些示例，展示如何在 `<script setup>` 中编写各种类型的函数和逻辑
+
+#### 2.使用计算属性
+
+`computed` 的功能正是将 `fullName` 这个计算属性与 `firstName` 和 `lastName` 这两个响应式数据绑定在一起。当 `firstName` 或 `lastName` 的值发生变化时，`fullName` 也会自动更新。
+
+```vue
+<template>
+  <div>
+    <p>Full Name: {{ fullName }}</p>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from 'vue';
+
+const firstName = ref('John');
+const lastName = ref('Doe');
+
+const fullName = computed(() => `${firstName.value} ${lastName.value}`);
+</script>
+
+```
+
+#### 3. 使用生命周期钩子
+
+```vue
+<template>
+  <div>
+    <p>Check the console for lifecycle hook messages.</p>
+  </div>
+</template>
+
+<script setup>
+import { onMounted, onUnmounted } from 'vue';
+
+onMounted(() => {
+  console.log('Component mounted');
+});
+
+onUnmounted(() => {
+  console.log('Component unmounted');
+});
+</script>
+
+```
+
+#### 4. 使用异步函数
+
+```vue
+<template>
+  <div>
+    <button @click="fetchData">Fetch Data</button>
+    <p>Data: {{ data }}</p>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+
+const data = ref(null);
+
+const fetchData = async () => {
+  const response = await fetch('https://api.example.com/data');
+  data.value = await response.json();
+};
+</script>
+
+```
+
+#### 5. 引用外部组件
+
+```vue
+<template>
+  <div>
+    <MyComponent />
+  </div>
+</template>
+
+<script setup>
+import MyComponent from './MyComponent.vue';
+</script>
+
+```
+
+#### 6. 使用模板引用
+
+```vue
+<template>
+  <div>
+    <input ref="inputRef" type="text" />
+    <button @click="focusInput">Focus Input</button>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+
+const inputRef = ref(null);
+
+const focusInput = () => {
+  inputRef.value.focus();
+};
+</script>
+
+```
+
+#### 7. 使用 `watch`
+
+```vue
+<template>
+  <div>
+    <input v-model="message" type="text" />
+  </div>
+</template>
+
+<script setup>
+import { ref, watch } from 'vue';
+
+const message = ref('');
+
+watch(message, (newValue, oldValue) => {
+  console.log(`Message changed from ${oldValue} to ${newValue}`);
+});
+</script>
+
+```
+
 ## VUE小案例-黑马记事本
 
 >目录结构
