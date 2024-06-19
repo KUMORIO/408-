@@ -42,3 +42,29 @@ npm cache verify = npm cache clean --force
 
 E:\Vue\brush-question-app\brush-question-app
 
+### 数据库建立
+
+表名称easy_job
+
+
+
+```sql
+CREATE TABLE `sys_account` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `phone` varchar(11) DEFAULT NULL COMMENT '手机号',
+  `user_name` varchar(20) DEFAULT NULL COMMENT '用户名',
+  `password` varchar(32) DEFAULT NULL COMMENT '密码',
+  `position` varchar(150) DEFAULT NULL COMMENT '职位',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态 0:禁用 1:启用',
+  `roles` varchar(100) DEFAULT NULL COMMENT '用户拥有的角色，多个用逗号隔开',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `idx_phone` (`phone`)
+) ENGINE=InnoDB AUTO_INCREMENT=1000000 DEFAULT CHARSET=utf8mb4 COMMENT='账号信息';
+
+```
+
+
+
+mvn clean install -U
+
