@@ -929,3 +929,206 @@ alter user 'root'@'localhost' identified with mysql_native_password by '223663';
 </html>
 ```
 
+````asm
+好的，让我们逐一解释这个汇编程序中的所有指令。程序的主要功能是从用户输入中查找特定数字并显示其在数组中的位置和值。程序包含数据段、栈段、代码段以及多个子程序。
+
+### 数据段（DATA SEGMENT）
+
+```asm
+DATA SEGMENT
+    data1     dw 0,1,2,9,4,5,6,7,8,11    ; 数组数据
+    INPUTTIPS DB 'Please input score, divid with "  ":$' ; 提示信息
+    ERRORTIPS DB 'input ERROR!, please try again!$' ; 错误提示
+    tips      DB 'not find$' ; 未找到提示
+    sii1      db 0 ; 存储位置
+
+    ENDTIPS   DB 'results:$' ; 结果提示
+DATA ENDS
+```
+
+- `data1`：一个包含 10 个 `word` 类型的数组，用于存储待查找的数字。
+- `INPUTTIPS`：输入提示信息字符串，以 `$` 结束。
+- `ERRORTIPS`：错误提示信息字符串，以 `$` 结束。
+- `tips`：未找到提示信息字符串，以 `$` 结束。
+- `sii1`：一个字节，用于存储位置。
+- `ENDTIPS`：结果提示信息字符串，以 `$` 结束。
+
+### 栈段（STACK SEGMENT）
+
+```asm
+STACK SEGMENT
+          DB 200 DUP(0) ; 定义栈空间
+STACK ENDS
+```
+
+- 定义了 200 个字节的栈空间，初始化为 0。
+
+### 代码段（CODE SEGMENT）
+
+```asm
+CODE SEGMENT
+               ASSUME CS:CODE,DS:DATA,SS:STACK
+START:     
+               MOV    AX,DATA
+               MOV    DS,AX
+               MOV    AX,STACK
+               MOV    SS,AX
+               
+               CALL   BEGIN            ; 显示提示信息
+               CALL   INPUT            ; 输入数字
+               CALL   NEXT             ; 换行
+               CALL   PRINT            ; 打印结果
+               
+               MOV    AH,4CH           ; 结束程序
+               INT    21H
+```
+
+- `ASSUME CS:CODE,DS:DATA,SS:STACK`：指示编译器代码段、数据段和栈段的选择。
+- `START:`：程序的起始位置。
+- `MOV AX,DATA` 和 `MOV DS,AX`：将数据段地址加载到 `DS` 寄存器。
+- `MOV AX,STACK` 和 `MOV SS,AX`：将栈段地址加载到 `SS` 寄存器。
+- `CALL BEGIN`：调用 `BEGIN` 子程序，显示提示信息。
+- `CALL INPUT`：调用 `INPUT` 子程序，读取用户输入。
+- `CALL NEXT`：调用 `NEXT` 子程序，换行。
+- `CALL PRINT`：调用 `PRINT` 子程序，打印结果。
+- `MOV AH,4CH` 和 `INT 21H`：结束程序并返回到操作系统。
+
+### BEGIN 子程序
+
+```asm
+BEGIN PROC NEAR
+               MOV    DX,OFFSET INPUTTIPS ; 显示提示信息
+               MOV    AH,09H             ; 显示字符串
+               INT    21H                ; 调用 DOS 中断
+
+               XOR    AX,AX
+               XOR    BX,BX
+               XOR    CX,CX
+               XOR    SI,SI
+               XOR    DI,DI              ; 清空寄存器
+
+               RET
+BEGIN ENDP
+```
+
+- `MOV DX,OFFSET INPUTTIPS`：将提示信息的地址加载到 `DX` 寄存器。
+- `MOV AH,09H` 和 `INT 21H`：调用 DOS 中断 21H 显示字符串。
+- `XOR AX,AX`，`XOR BX,BX`，`XOR CX,CX`，`XOR SI,SI`，`XOR DI,DI`：将 `AX`，`BX`，`CX`，`SI`，`DI` 寄存器清零。
+- `RET`：返回到调用处。
+
+### INPUT 子程序
+
+```asm
+INPUT PROC NEAR
+               MOV    AH,1               ; 键盘输入
+               INT    21H                ; 从键盘读取数据
+               CMP    AL,0DH             ; 判断是否为回车
+               JZ     ENDINPUT           ; 如果是回车则结束输入
+
+               CMP    AL,30H             ; 验证输入是否为数字
+               JB     ERROR              ; 小于30H则为非法输入
+               CMP    AL,39H
+               JA     ERROR              ; 大于39H则为非法输入
+
+               SUB    AL,30H             ; 转换为实际数字
+               MOV    CL,4
+               SHL    BX,CL              ; 将数字左移四位，准备BCD转换
+               ADD    BL,AL
+               JMP    INPUT
+
+ENDINPUT:  
+               MOV    DX,OFFSET ENDTIPS   ; 显示结果提示
+               MOV    AH,09H
+               INT    21H
+
+               JMP    INPUTEND
+
+ERROR:     
+               MOV    DX,OFFSET ERRORTIPS ; 显示错误提示
+               MOV    AH,09H
+               INT    21H
+               CALL   NEXT
+               JMP    START
+
+INPUTEND:  RET
+INPUT ENDP
+```
+
+- `MOV AH,1` 和 `INT 21H`：读取一个字符输入到 `AL` 寄存器。
+- `CMP AL,0DH` 和 `JZ ENDINPUT`：如果输入是回车，则结束输入。
+- `CMP AL,30H` 和 `JB ERROR`：如果输入小于 `0` 的 ASCII 值，则跳转到 `ERROR`。
+- `CMP AL,39H` 和 `JA ERROR`：如果输入大于 `9` 的 ASCII 值，则跳转到 `ERROR`。
+- `SUB AL,30H`：将输入的 ASCII 数字字符转换为实际数字。
+- `MOV CL,4` 和 `SHL BX,CL`：将 `BX` 左移四位，为下一个数字腾出位置。
+- `ADD BL,AL`：将转换后的数字添加到 `BX` 的低四位。
+- `JMP INPUT`：循环读取下一个字符。
+- `ENDINPUT` 标签部分：显示结果提示信息。
+- `ERROR` 标签部分：显示错误提示信息，调用 `NEXT` 子程序换行，并跳转回 `START`。
+- `INPUTEND`：返回到调用处。
+
+### PRINT 子程序
+
+```asm
+PRINT PROC NEAR
+               MOV    SI,0 将寄存器 SI 设置为 0
+               ADD    sii1,1
+
+               CALL   BCD_TO_HEN         ; 转换为BCD
+               MOV    CX,10
+
+               MOV    SI,OFFSET data1    ; 从数组开始搜索
+
+LMAX:      
+               CMP    BX, [SI]           ; 比较数组元素
+               JE     NEXT1              ; 如果相等跳到NEXT1
+               ADD    sii1, 1
+               ADD    SI, 2
+               LOOP   LMAX
+
+NEXT1:     
+               CALL   PRINTINT            ; 打印位置和数字
+               ADD    sii1, 30H           ; 转换为ASCII码
+               CMP    sii1, 30H
+               JB     next2               ; 小于30H跳转
+               CMP    sii1, 39H
+               JA     next2               ; 大于39H跳转
+
+               MOV    DL, sii1
+               MOV    AH, 02H
+               INT    21H
+
+               RET
+next2:     
+               MOV    DX, OFFSET tips
+               MOV    AH, 09H
+               INT    21H
+               RET
+PRINT ENDP
+```
+
+- `MOV SI,0` 和 `ADD sii1,1`：初始化 `SI` 和 `sii1`。
+- `CALL BCD_TO_HEN`：调用子程序将 `BX` 转换为 BCD。
+- `MOV CX,10`：设置循环计数器。
+- `MOV SI,OFFSET data1`：将数组的起始地址加载到 `SI`。
+- `LMAX` 标签部分：循环比较 `BX` 和数组中的元素。如果找到匹配的元素，则跳转到 `NEXT1`，否则继续查找。
+- `NEXT1` 标签部分：调用 `PRINTINT` 打印结果，将 `sii1` 转换为 ASCII 码并输出。
+- `next2` 标签部分：如果未找到匹配的数字，显示 "not find" 提示信息。
+
+### NEXT 子程序
+
+```asm
+NEXT:      
+               MOV    DL, 0AH             ; 换行符
+               MOV    AH, 02H
+               INT    21H
+               MOV    DL, 0DH             ; 回车符
+               MOV    AH, 02H
+               INT    21H
+               RET
+```
+
+- `MOV DL, 0AH` 和 `MOV AH, 02H`，`INT 21H`：输出换行符。
+- `MOV DL, 0DH` 和 `MOV AH, 02H`，`INT 21H`：输出回车符。
+- `RET`：返回
+````
+
