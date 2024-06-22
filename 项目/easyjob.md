@@ -68,3 +68,15 @@ CREATE TABLE `sys_account` (
 
 mvn clean install -U
 
+# 项目架构
+
+# login模块
+
+## 输入网址
+
+```txt
+http://127.0.0.1:9091/api/login?phone=18688886666&password=47ec2dd791e31e2ef2076caf64ed9b3d&checkCode=vzquw
+```
+
+
+
