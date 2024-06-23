@@ -304,6 +304,72 @@ watch(message, (newValue, oldValue) => {
   console.log(`Message changed from ${oldValue} to ${newValue}`);
 });
 </script>
+```
+
+### 父组件和子组件传参
+
+prop $emit
+
+#### 子组件
+
+```vue
+<template>
+  <div>
+    <h2>Child Component</h2>
+    <p>{{ message }}</p>
+    <button @click="sendMessageToParent">Send Message to Parent</button>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    message: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    sendMessageToParent() {
+      this.$emit('childEvent', 'Hello from Child');
+    }
+  }
+};
+</script>
+
+```
+
+#### 父组件
+
+```vue
+<template>
+  <div>
+    <h1>Parent Component</h1>
+    <ChildComponent :message="parentMessage" @childEvent="handleChildEvent" />
+    <p>Message from Child: {{ messageFromChild }}</p>
+  </div>
+</template>
+
+<script>
+import ChildComponent from './ChildComponent.vue';
+
+export default {
+  components: {
+    ChildComponent
+  },
+  data() {
+    return {
+      parentMessage: 'Hello from Parent',
+      messageFromChild: ''
+    };
+  },
+  methods: {
+    handleChildEvent(message) {
+      this.messageFromChild = message;
+    }
+  }
+};
+</script>
 
 ```
 

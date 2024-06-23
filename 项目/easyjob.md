@@ -72,11 +72,145 @@ mvn clean install -U
 
 # login模块
 
+## 验证码
+
+### 前端
+
+```js
+       <img
+              :src="checkCodeUrl"
+              class="check-code"
+              @click="changeCheckCode"
+            />
+                  
+//验证码
+const checkCodeUrl = ref(null);
+const changeCheckCode = () => {
+  checkCodeUrl.value = `${api.checkCode}?time=${new Date().getTime()}`;
+};
+
+```
+
+### 后端
+
+```java
+// 导入所需的包
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+
+// 使用Spring的注解来映射请求路径
+@RequestMapping("/checkCode")
+public void checkCode(HttpServletResponse response, HttpSession session) throws IOException {
+    // 创建一个验证码图片对象，参数依次为：宽度、高度、字符数、干扰线数量
+    CreateImageCode vCode = new CreateImageCode(130, 38, 5, 10);
+    
+    // 设置响应头，告诉浏览器不缓存这个响应
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Cache-Control", "no-cache");
+    response.setDateHeader("Expires", 0);
+    
+    // 设置响应内容类型为JPEG图片
+    response.setContentType("image/jpeg");
+    
+    // 获取生成的验证码字符串
+    String code = vCode.getCode();
+    
+    // 将验证码字符串存储到会话中，以便后续验证使用
+    session.setAttribute(Constants.CHECK_CODE_KEY, code);
+    
+    // 将验证码图片写入HTTP响应的输出流中，返回给客户端
+    vCode.write(response.getOutputStream());
+}
+
+```
+
+
+
 ## 输入网址
 
 ```txt
 http://127.0.0.1:9091/api/login?phone=18688886666&password=47ec2dd791e31e2ef2076caf64ed9b3d&checkCode=vzquw
 ```
 
+# 八股文管理
+
+## 批量发布
+
+### 前端代码
+
+#### src\views\content\QuestionList.vue
+
+template
+
+```html
+<el-button
+
+​         :disabled="selectRowList.length == 0"
+
+​         type="primary"
+
+​         @click="postQuestionBatch"
+
+​         v-has="proxy.PermissionCode.question.post"
+
+​         \>批量发布
+
+</el-button>
+```
+
+js
+
+```js
+const selectRowList = ref([]);
+const rowSelected = (rows) => {
+  selectRowList.value = rows.map((item) => {
+    return item.questionId;
+  });
+};
+```
 
 
+
+```js
+const postQuestionBatch = (params, url) => {
+  proxy.Confirm(`确定要发布这${selectRowList.value.length}条记录吗？`, () => {
+    postQuestionDone(selectRowList.value.join(","));
+  });
+};
+
+const postQuestionDone = async (questionIds) => {
+  let result = await proxy.Request({
+    url: api.postQuestion,
+    params: {
+      questionIds,
+    },
+  });
+  if (!result) {
+    return;
+  }
+  proxy.Message.success("发布成功");
+  loadDataList();
+};
+```
+
+#### logic:
+
+selectRowList -->获取 questionIds-->post请求到api.postQuestion-->后端
+
+### 对应后端代码
+
+#### com/easyjob/controller/QuestionInfoController.java
+
+```java
+ @RequestMapping("/postQuestion")
+    @GlobalInterceptor(permissionCode = PermissionCodeEnum.QUESTION_POST)
+    public ResponseVO postQuestion(@VerifyParam(required = true) String questionIds) {
+        updateStatus(questionIds, PostStatusEnum.POST.getStatus());
+        return getSuccessResponseVO(null);
+    }
+```
+
+
+
+​        
